@@ -15,9 +15,13 @@ class Album(BaseModel):    #FOR ALBUMS LIST UNDER PYDANTIC SCHEMA
     release_date: date
 
 
-class Band(BaseModel):        #PYDANTIC SCHEMA FOR BANDS
-    id: int
+class BandBase(BaseModel):        #PYDANTIC SCHEMA FOR BANDS
     name: str
     genre: str
     albums: list[Album] = []  #Albums list along with default value
 
+class BandCreate(BandBase):
+    pass
+
+class BandWithID(BandBase):
+    id : int

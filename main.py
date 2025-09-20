@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException            #IMPORT
-from schemas import GenreURLChoices, Band
+from schemas import GenreURLChoices, BandBase, BandWithID, BandCreate
 
 app = FastAPI() #INSTANCE OF FASTAPI
 
@@ -28,8 +28,8 @@ BANDS = [
 ]
 
 @app.get('/bands')
-async def bands(genre: GenreURLChoices | None = None, has_albums: bool = False) -> list[Band]:
-    band_list = [Band(**b) for b in BANDS]   #Framing the data from BANDS in pydantic schema
+async def bands(genre: GenreURLChoices | None = None, has_albums: bool = False) -> list[BandBase]:
+    band_list = [BandBase(**b) for b in BANDS]   #Framing the data from BANDS in pydantic schema
     if genre:
         band_list = [b for b in band_list if b.genre.lower() == genre.value]
 
@@ -40,8 +40,8 @@ async def bands(genre: GenreURLChoices | None = None, has_albums: bool = False) 
 
 
 @app.get('/bands/{band_id}') #ROUTE
-async def band(band_id: int) -> Band:   #Return format is a obj under Band class(schemas)
-  band = next((Band(**b) for b in BANDS if b['id'] == band_id), None)
+async def band(band_id: int) -> BandWithID:   #Return format is a obj under Band class(schemas)
+  band = next((BandWithID(**b) for b in BANDS if b['id'] == band_id), None)
   if band is None: 
     raise HTTPException(status_code = 404, detail = 'Band not found')
   return band
@@ -52,3 +52,12 @@ async def bands_for_genre(genre: GenreURLChoices) -> list[dict]:  #NOT USING PYD
     return[
       b for b in BANDS if b['genre'].lower() == genre.value
     ]
+
+
+@app.post('/bands')
+async def create_bands(band_create: BandCreate) -> BandWithID:
+   id = BANDS[-1]['id'] + 1   #Creating an id for newly added band by the user
+   Band = BandWithID(id = id , **band_create.model_dump()).model_dump() #Dumping into dict and variable
+   BANDS.append(Band)  # Add into list
+   return Band
+   
