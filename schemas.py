@@ -27,7 +27,7 @@ class BandBase(BaseModel):        #PYDANTIC SCHEMA FOR BANDS
     albums: list[Album] = []  #Albums list along with default value
 
 class BandCreate(BandBase):
-    @field_validator('genre', pre=True)
+    @field_validator('genre', mode = 'before')
     def title_case_genre(cls, value):
         return value.title() #converts the string to title case
 
