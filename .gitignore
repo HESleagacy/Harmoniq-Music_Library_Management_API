@@ -1,2 +1,64 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
 venv/
-pycache/
+.env/
+.env.bak/
+.venv/
+
+# SQLite database
+*.sqlite
+*.db
+
+# Alembic migration cache
+migrations/__pycache__/
+migrations/versions/__pycache__/
+
+# Environment and configuration files
+*.env
+*.ini.bak
+*.local
+.DS_Store
+
+# Logs and runtime files
+*.log
+logs/
+*.pid
+
+# IDE & editor junk
+.vscode/
+.idea/
+*.swp
+*.swo
+*.bak
+
+# Test and coverage files
+.coverage
+.tox/
+nosetests.xml
+coverage.xml
+htmlcov/
+
+# Python packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# OS-specific
+Thumbs.db
+Desktop.ini
+
+# Images / screenshots (optional, if you don’t want to version them)
+*.png
+*.jpg
+*.jpeg
+*.gif

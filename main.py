@@ -5,12 +5,8 @@ from contextlib import asynccontextmanager
 from sqlmodel import Session, select
 from typing import Annotated
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-   init_db()
-   yield
 
-app = FastAPI(lifespan=lifespan) #INSTANCE OF FASTAPI
+app = FastAPI() #INSTANCE OF FASTAPI
 
 #@app.get('/') #ROUTE
 #async def index() -> dict[str, str]: #ASYNC FUNCTION WITH PROPER RETURN TYPE
